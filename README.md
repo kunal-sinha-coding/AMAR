@@ -54,12 +54,12 @@ Alternatively, you can run the commands step-by-step as shown below:
     CUDA_VISIBLE_DEVICES=0 bash run_ft.sh CWQ LLaMA-2-13b-hf cwq_4_16_32_16 test 4 16 0 32 16 8
 
 ### Querying on Freebase
-    CUDA_VISIBLE_DEVICES=0 python -u eval_final.py --dataset WebQSP --pred_file Reading/LLaMA-2-7b-hf/WebQSP_webqsp_64_7_32_16/evaluation_beam/beam_test_top_k_predictions.json
+    CUDA_VISIBLE_DEVICES=0 python -u eval_final.py --dataset WebQSP --pred_file Reading/LLaMA-2-7b-hf/WebQSP_webqsp_100_7_32_16/evaluation_beam/beam_test_top_k_predictions.json
     CUDA_VISIBLE_DEVICES=0 python -u eval_final.py --dataset CWQ --pred_file Reading/LLaMA-2-13b-hf/CWQ_cwq_4_16_32_16/evaluation_beam/beam_test_top_k_predictions.json
 
 Querying with golden entity:
 
-    CUDA_VISIBLE_DEVICES=0 python -u eval_final.py --dataset WebQSP --pred_file Reading/LLaMA-2-7b-hf/WebQSP_webqsp_64_7_32_16/evaluation_beam/beam_test_top_k_predictions.json --golden_ent
+    CUDA_VISIBLE_DEVICES=0 python -u eval_final.py --dataset WebQSP --pred_file Reading/LLaMA-2-7b-hf/WebQSP_webqsp_100_7_32_16/evaluation_beam/beam_test_top_k_predictions.json --golden_ent
     CUDA_VISIBLE_DEVICES=0 python -u eval_final.py --dataset CWQ --pred_file Reading/LLaMA-2-13b-hf/CWQ_cwq_4_16_32_16/evaluation_beam/beam_test_top_k_predictions.json --golden_ent
 
 
