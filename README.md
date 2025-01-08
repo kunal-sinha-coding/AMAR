@@ -33,7 +33,8 @@ and to stop a currently running service at the same port:
 
 ## KGQA Datasets and Retrieval data
 
-Download from []()
+Download from [Google drive](https://drive.google.com/drive/folders/1uOcpPoBcFeL2JWE6-Wpj6kuR-7Vdgiyz?usp=sharing) or [Baidu drive](https://pan.baidu.com/s/12w4bCqFhDKp6iPVW6i2cFw?pwd=p9da), and unzip data.zip to `Amar/data`
+
 
 More details of entity/relation retrieval can be found in [GMT-KBQA](https://github.com/HXX97/GMT-KBQA), and subgraph retrieval can be found in [DECAF](https://github.com/awslabs/decode-answer-logical-form).
 
