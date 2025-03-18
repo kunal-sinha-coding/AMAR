@@ -3,7 +3,7 @@
 This is the code of the paper 'Harnessing Large Language Models for Knowledge Graph Question Answering via Adaptive Multi-Aspect Retrieval-Augmentation' (Accepted by AAAI 2025).
 
 # Environment Setup
-    conda create -n amar python=3.8
+    conda create -n amar python=3.9.18
     pip install -r requirement.txt
 
 ### Freebase Setup
