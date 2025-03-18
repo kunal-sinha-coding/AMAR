@@ -12,14 +12,14 @@ gate_len=${9}
 num_beams=${10}
 
 if [ "$data" == "WebQSP" ]; then
-    num_train_epochs=100.0
+    num_train_epochs=80.0
 else
-    num_train_epochs=10.0
+    num_train_epochs=8.0
 fi
 
 
 if [[ $mode == *"train"* ]]; then
-    CUDA_VISIBLE_DEVICES=${cuda} python -u LLMs/LLaMA/src/train_bash.py \
+    python -u LLMs/LLaMA/src/train_bash.py \
             --stage sft \
             --model_name_or_path ./../../LLM_checkpoint/${llm_model} \
             --do_train  \
@@ -45,8 +45,10 @@ if [[ $mode == *"train"* ]]; then
             --gate_len ${gate_len}
 fi
 
+
+
 if [[ $mode == *"test"* ]]; then
-    CUDA_VISIBLE_DEVICES=${cuda}  python -u LLMs/LLaMA/src/beam_output_eva.py  \
+    python -u LLMs/LLaMA/src/beam_output_eva.py  \
             --model_name_or_path  ./../../LLM_checkpoint/${llm_model}   \
             --dataset_dir LLMs/data_id  \
             --dataset ${data}_Freebase_NQ_test  \
