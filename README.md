@@ -41,7 +41,7 @@ More details of entity/relation retrieval can be found in [GMT-KBQA](https://git
 ## Reproduction from sft checkpoint
 Change the `--model_name_or_path` in `run_ft.sh` to your LLM checkpoint path. 
 
-Download checkpoints from [Google drive](https://drive.google.com/drive/folders/1uOcpPoBcFeL2JWE6-Wpj6kuR-7Vdgiyz?usp=sharing) or [Baidu drive](https://pan.baidu.com/s/12w4bCqFhDKp6iPVW6i2cFw?pwd=p9da), and unzip WebQSP_webqsp_100_7_32_16.zip to `Reading/LLaMA-2-7b-hf/`. The checkpoint files are located in `WebQSP_webqsp_100_7_32_16/checkpoint/`. 
+Download checkpoints from [Google drive](https://drive.google.com/drive/folders/1uOcpPoBcFeL2JWE6-Wpj6kuR-7Vdgiyz?usp=sharing). The checkpoint files are located in `WebQSP_webqsp_100_7_32_16/checkpoint/`. 
 
 We also included the Inference results (`evaluation_beam/beam_test_gen_statistics.json` and `evaluation_beam/beam_test_top_k_predictions.json`) and the results of querying on Freebase (all files with prefix `beam_test_top_k_predictions.json_*`)
 
