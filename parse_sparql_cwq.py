@@ -10,6 +10,7 @@ class ParseError(Exception):
 
 class Parser:
     def __init__(self):
+        print("testing")
         pass
 
     def parse_query_cwq(self, query, mid_list):
