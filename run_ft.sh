@@ -19,7 +19,7 @@ fi
 
 
 if [[ $mode == *"train"* ]]; then
-    python -u LLMs/LLaMA/src/train_bash.py \
+    python3 -u LLMs/LLaMA/src/train_bash.py \
             --stage sft \
             --model_name_or_path ./../../LLM_checkpoint/${llm_model} \
             --do_train  \
@@ -48,7 +48,7 @@ fi
 
 
 if [[ $mode == *"test"* ]]; then
-    python -u LLMs/LLaMA/src/beam_output_eva.py  \
+    python3 -u LLMs/LLaMA/src/beam_output_eva.py  \
             --model_name_or_path  ./../../LLM_checkpoint/${llm_model}   \
             --dataset_dir LLMs/data_id  \
             --dataset ${data}_Freebase_NQ_test  \

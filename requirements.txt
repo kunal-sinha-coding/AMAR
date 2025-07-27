@@ -4,7 +4,7 @@ Flask==3.0.3
 huggingface-hub==0.24.3
 jieba==0.42.1
 jsonlines==4.0.0
-networkx==3.2.1
+networkx
 nltk==3.6.5
 numpy==1.19.5
 pandas==1.4.0
@@ -13,7 +13,6 @@ pillow==10.2.0
 ptvsd==4.3.2
 pyodbc==5.1.0
 pyparsing==3.1.1
-pyserini==0.22.1
 pytz==2023.3.post1
 PyYAML==6.0
 requests==2.31.0
@@ -25,15 +24,10 @@ safetensors==0.4.2
 scikit-learn==1.0.2
 scipy==1.5.4
 sentence-transformers==2.2.2
-simcse==0.4
 SPARQLWrapper==2.0.0
 tiktoken==0.7.0
 timm==0.9.7
-tokenizers==0.13.3
 tomlkit==0.12.0
-torch==1.13.1+cu117
-torchaudio==0.13.1+cu117
-torchvision==0.14.1+cu117
 tqdm==4.62.3
 transformers==4.31.0
 trl==0.9.4
@@ -53,10 +47,7 @@ sympy==1.13.1
 cvxpy==1.5.2
 colorama==0.4.6
 termcolor==2.4.0
-flair
-pytorch-transformers
 sse-starlette
 fastapi
 matplotlib
-rouge_chinese
 gradio
