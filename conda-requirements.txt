@@ -1,0 +1,14 @@
+faiss-gpu
+cvxpy
+scipy
+numpy
+pandas
+matplotlib
+scikit-learn
+torch
+torchvision
+torchaudio
+deepspeed
+flair
+pyodbc
+

@@ -21,7 +21,7 @@ fi
 if [[ $mode == *"train"* ]]; then
     python3 -u LLMs/LLaMA/src/train_bash.py \
             --stage sft \
-            --model_name_or_path ./../../LLM_checkpoint/${llm_model} \
+            --model_name_or_path LLM_checkpoint/${llm_model}/${data}_${setting}/checkpoint \
             --do_train  \
             --dataset_dir LLMs/data_id \
             --dataset ${data}_Freebase_NQ_train \
@@ -49,7 +49,7 @@ fi
 
 if [[ $mode == *"test"* ]]; then
     python3 -u LLMs/LLaMA/src/beam_output_eva.py  \
-            --model_name_or_path  ./../../LLM_checkpoint/${llm_model}   \
+            --model_name_or_path  LLM_checkpoint/${llm_model}   \
             --dataset_dir LLMs/data_id  \
             --dataset ${data}_Freebase_NQ_test  \
             --template default  \
