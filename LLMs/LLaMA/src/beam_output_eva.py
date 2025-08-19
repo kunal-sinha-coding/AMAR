@@ -26,8 +26,11 @@ def main():
         will_matched_lines = 0
         
         # 2. 读取每一行
+        num_data = 10 #KUNAL edit
         for data in tqdm(json_data):
             total_lines += 1
+            if total_lines > num_data:
+                continue
             query = data['instruction']+data['input']
             id = data['ID']
             entity = id2ent[id]
@@ -61,7 +64,7 @@ def main():
     print(f"Percentage of will matched lines: {will_percentage:.2f}%")
     
     
-    output_dir = os.path.join(os.path.dirname(model_args.checkpoint_dir[0]),'evaluation_beam/generated_predictions.jsonl')
+    output_dir = os.path.join(model_args.checkpoint_dir[0],'evaluation_beam/generated_predictions.jsonl')
     if not os.path.exists(os.path.dirname(output_dir)):
         os.makedirs(os.path.dirname(output_dir))
     # with open(output_dir, 'w') as f:

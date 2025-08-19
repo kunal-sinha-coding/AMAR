@@ -21,15 +21,15 @@ fi
 if [[ $mode == *"train"* ]]; then
     python3 -u LLMs/LLaMA/src/train_bash.py \
             --stage sft \
-            --model_name_or_path LLM_checkpoint/${llm_model}/${data}_${setting}/checkpoint \
+            --model_name_or_path meta-llama/Llama-2-7b-hf \
             --do_train  \
             --dataset_dir LLMs/data_id \
             --dataset ${data}_Freebase_NQ_train \
             --template default  \
             --finetuning_type lora \
             --lora_target gate_proj,down_proj,up_proj \
-            --output_dir Reading/${llm_model}/${data}_${setting}/checkpoint \
-            --overwrite_cache \
+            --output_dir LLM_checkpoint/${llm_model} \
+	    --overwrite_cache \
             --per_device_train_batch_size 4 \
             --gradient_accumulation_steps 4  \
             --lr_scheduler_type cosine \
@@ -55,7 +55,7 @@ if [[ $mode == *"test"* ]]; then
             --template default  \
             --finetuning_type lora  \
             --lora_target gate_proj,down_proj,up_proj \
-            --checkpoint_dir Reading/${llm_model}/${data}_${setting}/checkpoint  \
+            --checkpoint_dir LLM_checkpoint/${llm_model} \
             --num_beams ${num_beams}  \
             --max_new_tokens 256 \
             --topk ${topk} \
