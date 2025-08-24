@@ -73,6 +73,7 @@ class CustomPPOTrainer(PPOTrainer, Trainer):
             logger.info(f"  Gradient Accumulation steps = {self.args.gradient_accumulation_steps}")
             logger.info(f"  Total optimization steps = {max_steps}")
             logger.info(f"  Number of trainable parameters = {count_parameters(self.model)[0]}")
+            import pdb; pdb.set_trace()
 
         # Keyword arguments for `model.generate`
         generating_args = self.generating_args.to_dict()
@@ -108,6 +109,7 @@ class CustomPPOTrainer(PPOTrainer, Trainer):
             self.model.train()
 
             # Run PPO step
+            import pdb; pdb.set_trace()
             stats = self.step(queries, responses, rewards)
             self.tokenizer.padding_side = "left" # restore padding side
             loss_meter.update(float(stats["ppo/loss/total"]), n=len(rewards))
@@ -125,6 +127,7 @@ class CustomPPOTrainer(PPOTrainer, Trainer):
             self.log_callback.on_step_end(self.args, self.state, self.control)
 
             if self.is_local_process_zero() and (step+1) % self.args.logging_steps == 0:
+                import pdb; pdb.set_trace()
                 logs = dict(
                     loss=round(loss_meter.avg, 4),
                     reward=round(reward_meter.avg, 4),

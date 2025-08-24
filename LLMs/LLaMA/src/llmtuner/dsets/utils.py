@@ -40,7 +40,7 @@ def split_dataset(
     data_args: "DataArguments",
     training_args: "TrainingArguments"
 ) -> Dict[str, "Dataset"]:
-    num_data = 10
+    num_data = 1000
     if training_args.do_train:
         if data_args.val_size > 1e-6: # Split the dataset
             if data_args.streaming:
@@ -55,6 +55,6 @@ def split_dataset(
         else:
             if data_args.streaming:
                 dataset = dataset.shuffle(buffer_size=data_args.buffer_size, seed=training_args.seed)
-            return {"train_dataset": dataset.select(range(num_data))}
+            return {"train_dataset": dataset}#.select(range(num_data))}
     else: # do_eval or do_predict
         return {"eval_dataset": dataset.select(range(num_data))}

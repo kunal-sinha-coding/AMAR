@@ -10,7 +10,7 @@ from transformers import (
 
 ELQ_SERVICE_URL = "http://localhost:5688/entity_linking"
 FREEBASE_SPARQL_WRAPPER_URL = "http://localhost:8890/sparql"
-FREEBASE_ODBC_PORT = "13001"
+FREEBASE_ODBC_PORT = "1111" #"13001" #KUNAL edit
 
 def set_seed(args):
     random.seed(args.seed)

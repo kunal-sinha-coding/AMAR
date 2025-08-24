@@ -144,14 +144,17 @@ def main(pred_data, dataset_data):
         if bestf1 == 1.0:
             numCorrect += 1
 
+    f1_of_avg = 0
+    if precSum > 0 or recSum > 0:
+        f1_of_avg = 2 * (recSum / total) * (precSum / total) / (recSum / total + precSum / total)
     print("Number of questions:", int(total))
     print("Average precision over questions: %.3f" % (precSum / total))
     print("Average recall over questions: %.3f" % (recSum / total))
     print("Average f1 over questions (accuracy): %.3f" % (f1sum / total))
-    print("F1 of average recall and average precision: %.3f" % (2 * (recSum / total) * (precSum / total) / (recSum / total + precSum / total)))
+    print("F1 of average recall and average precision: %.3f" % (f1_of_avg))
     print("True accuracy (ratio of questions answered exactly correctly): %.3f" % (numCorrect / total))
     print("Hits@1 over questions: %.3f" % (hitSum / total))
-    res = f'Number of questions:{int(total)}\n, Average precision over questions: {(precSum / total)}\n, Average recall over questions: {(recSum / total)}\n, Average f1 over questions (accuracy): {(f1sum / total)}\n, F1 of average recall and average precision: {(2 * (recSum / total) * (precSum / total) / (recSum / total + precSum / total))}\n, True accuracy (ratio of questions answered exactly correctly): {(numCorrect / total)}\n, Hits@1 over questions: {(hitSum / total)}'
+    res = f'Number of questions:{int(total)}\n, Average precision over questions: {(precSum / total)}\n, Average recall over questions: {(recSum / total)}\n, Average f1 over questions (accuracy): {(f1sum / total)}\n, F1 of average recall and average precision: {f1_of_avg}\n, True accuracy (ratio of questions answered exactly correctly): {(numCorrect / total)}\n, Hits@1 over questions: {(hitSum / total)}'
     dirname = os.path.dirname(pred_data)
     filename = os.path.basename(pred_data)
     # dump_json(prediction_res, os.path.join(dirname, f'{filename}_new.json')) # 可以查看每个样本的三个指标得分
