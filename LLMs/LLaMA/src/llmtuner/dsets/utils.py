@@ -40,21 +40,20 @@ def split_dataset(
     data_args: "DataArguments",
     training_args: "TrainingArguments"
 ) -> Dict[str, "Dataset"]:
-    num_data = 1000
     if training_args.do_train:
         if data_args.val_size > 1e-6: # Split the dataset
             if data_args.streaming:
-                val_set = dataset.take(num_data)#int(data_args.val_size))
-                train_set = dataset.skip(int(num_data)).take(num_data)#data_args.val_size))
+                val_set = dataset.take(data_args.val_size)
+                train_set = dataset.skip(data_args.val_size)
                 dataset = dataset.shuffle(buffer_size=data_args.buffer_size, seed=training_args.seed)
                 return {"train_dataset": train_set, "eval_dataset": val_set}
             else:
                 val_size = int(data_args.val_size) if data_args.val_size > 1 else data_args.val_size
                 dataset = dataset.train_test_split(test_size=val_size, seed=training_args.seed)
-                return {"train_dataset": dataset["train"].select(range(num_data)), "eval_dataset": dataset["test"].select(range(num_data))}
+                return {"train_dataset": dataset["train"], "eval_dataset": dataset["test"]}
         else:
             if data_args.streaming:
                 dataset = dataset.shuffle(buffer_size=data_args.buffer_size, seed=training_args.seed)
-            return {"train_dataset": dataset}#.select(range(num_data))}
+            return {"train_dataset": dataset}
     else: # do_eval or do_predict
-        return {"eval_dataset": dataset.select(range(num_data))}
+        return {"eval_dataset": dataset}
