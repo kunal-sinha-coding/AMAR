@@ -29,7 +29,7 @@ if [[ $mode == *"train"* ]]; then
             --finetuning_type lora \
             --lora_target gate_proj,down_proj,up_proj \
             --output_dir LLM_checkpoint/${llm_model} \
-	    --overwrite_cache \
+	        --overwrite_cache \
             --per_device_train_batch_size 4 \
             --gradient_accumulation_steps 4  \
             --lr_scheduler_type cosine \
@@ -42,7 +42,8 @@ if [[ $mode == *"train"* ]]; then
             --topk ${topk} \
             --soft_prompt_length ${soft_prompt_length} \
             --extra_infor_len ${extra_infor_len} \
-            --gate_len ${gate_len}
+            --gate_len ${gate_len} \
+            --max_samples 1000
 fi
 
 
@@ -61,5 +62,6 @@ if [[ $mode == *"test"* ]]; then
             --topk ${topk} \
             --soft_prompt_length ${soft_prompt_length} \
             --extra_infor_len ${extra_infor_len} \
-            --gate_len ${gate_len}
+            --gate_len ${gate_len} \
+            --val_size 1000 \
 fi

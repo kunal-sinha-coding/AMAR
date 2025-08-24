@@ -26,11 +26,8 @@ def main():
         will_matched_lines = 0
         
         # 2. 读取每一行
-        num_data = 100 #KUNAL edit
         for data in tqdm(json_data):
             total_lines += 1
-            if total_lines > num_data:
-                continue
             query = data['instruction']+data['input']
             id = data['ID']
             entity = id2ent[id]
