@@ -78,7 +78,9 @@ def main(pred_data, dataset_data):
 
     for item in predAnswers:
         PredAnswersById[item["QuestionId"]] = item["Answers"]
-
+    print("PRED ANSWERS: ", predAnswers)
+    print("PRED ANSWERS BY ID: ", predAnswersById)
+    import pdb; pdb.set_trace()
     total = 0.0
     f1sum = 0.0
     recSum = 0.0
@@ -88,6 +90,7 @@ def main(pred_data, dataset_data):
     prediction_res = []
     if "Questions" in goldData:
         goldData = goldData["Questions"]
+    debug_hit = 0
     for entry in goldData:
 
         skip = True
@@ -104,14 +107,16 @@ def main(pred_data, dataset_data):
         id = entry["QuestionId"]
     
         if id not in PredAnswersById:
-            print("The problem " + id + " is not in the prediction set")
-            print("Continue to evaluate the other entries")
+            #print("The problem " + id + " is not in the prediction set")
+            #print("Continue to evaluate the other entries")
             continue
 
         if len(entry["Parses"]) == 0:
             print("Empty parses in the gold set. Breaking!!")
             break
 
+        print("IS IN PREDICTION SET")
+        debug_hit += 1
         predAnswers = PredAnswersById[id]
 
         bestf1 = -9999
@@ -147,6 +152,7 @@ def main(pred_data, dataset_data):
     f1_of_avg = 0
     if precSum > 0 or recSum > 0:
         f1_of_avg = 2 * (recSum / total) * (precSum / total) / (recSum / total + precSum / total)
+    print("DEBUG HIT: ", debug_hit)
     print("Number of questions:", int(total))
     print("Average precision over questions: %.3f" % (precSum / total))
     print("Average recall over questions: %.3f" % (recSum / total))
