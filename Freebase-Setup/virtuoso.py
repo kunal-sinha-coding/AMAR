@@ -7,6 +7,7 @@ import os
 import sys
 import subprocess
 import argparse
+import zipfile  # <--- added import
 
 virtuosoPath = "../virtuoso-opensource"
 if not os.path.exists(virtuosoPath):
@@ -24,7 +25,9 @@ def run(command):
 
 def start(dbPath, port):
 
-  if not os.path.exists(dbPath):
+  is_zip = dbPath.endswith(".zip")  # <--- detect if path is a ZIP
+
+  if not is_zip and not os.path.exists(dbPath):  # <--- only create folder if not ZIP
     os.mkdir(dbPath)
 
   # Recommended: 70% of RAM, each buffer is 8K
@@ -41,7 +44,7 @@ def start(dbPath, port):
   #   http://virtuoso.openlinksw.com/dataspace/doc/dav/wiki/Main/VirtConfigScale
   config = (
     f"[Database]\n"
-    f"DatabaseFile = {dbPath}/virtuoso.db\n"
+    f"DatabaseFile = {'/tmp/virtuoso.db' if is_zip else dbPath+'/virtuoso.db'}\n"
     f"ErrorLogFile = {dbPath}/virtuoso.log\n"
     f"LockFile = {dbPath}/virtuoso.lck\n"
     f"TransactionFile = {dbPath}/virtuoso.trx\n"
@@ -98,7 +101,7 @@ def start(dbPath, port):
     f"ServerThreads = 15 ; increased from unknown\n"
   ) 
 
-  configPath = f"{dbPath}/virtuoso.ini"
+  configPath = f"{dbPath}/virtuoso.ini" if not is_zip else f"/tmp/virtuoso.ini"
   print(config)
   print()
   print(configPath)
@@ -106,6 +109,23 @@ def start(dbPath, port):
   with open(configPath, 'w') as f:
       f.write(config)
   run(f"{virtuosoPath}/bin/virtuoso-t +configfile {configPath} +wait")
+
+  # <--- minimal addition: stream ZIP contents if dbPath is ZIP
+  if is_zip:
+    print(f"Streaming RDF data from ZIP: {dbPath}")
+    with zipfile.ZipFile(dbPath, 'r') as z:
+      for file_name in z.namelist():
+        print(f"Loading {file_name} into Virtuoso...")
+        with z.open(file_name) as f:
+          proc = subprocess.Popen(
+              [f"{virtuosoPath}/bin/isql", f"localhost:{isqlPort(port)}", "dba", "dba"],
+              stdin=subprocess.PIPE
+          )
+          for line in f:
+            proc.stdin.write(line)
+          proc.stdin.close()
+          proc.wait()
+    print("Finished loading ZIP contents.")
 
 def stop(port):
   run(f"echo 'shutdown;' | {virtuosoPath}/bin/isql localhost:{isqlPort(port)}")
@@ -128,7 +148,7 @@ if __name__ == "__main__":
       print("please specify path to the db directory with -d")
       sys.exit()
       
-    if not os.path.isdir(args.db_path):
+    if not os.path.exists(args.db_path):
       print("the path specified does not exist")
       sys.exit()
 
