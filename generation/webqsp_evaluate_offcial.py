@@ -79,7 +79,6 @@ def main(pred_data, dataset_data):
     for item in predAnswers:
         PredAnswersById[item["QuestionId"]] = item["Answers"]
     print("PRED ANSWERS: ", predAnswers)
-    print("PRED ANSWERS BY ID: ", predAnswersById)
     import pdb; pdb.set_trace()
     total = 0.0
     f1sum = 0.0
