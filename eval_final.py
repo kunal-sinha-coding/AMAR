@@ -225,7 +225,8 @@ def execute_normed_s_expr_from_label_maps(normed_expr,
                                         type_label_map,
                                         surface_index
                                         )
-    except:
+    except Exception as e:
+        print("Error: ", e)
         return 'null', []
     
     query_exprs = [d.replace('( ','(').replace(' )', ')') for d in denorm_sexprs]
@@ -236,7 +237,11 @@ def execute_normed_s_expr_from_label_maps(normed_expr,
                 denotation = []
             else:
                 sparql_query = lisp_to_sparql(query_expr)
+                print("SPARQL_QUERY: ", sparql_query)
+                sparql_query = "PREFIX ns: <http://rdf.freebase.com/ns/> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> SELECT DISTINCT ?lang WHERE { ns:m.03_r3 ns:location.country.official_language ?lang . }"#"SELECT ?s ?p ?o WHERE { ?s ?p ?o } LIMIT 10"#"SELECT * WHERE { ?s rdfs:label ?o } LIMIT 10"
                 denotation = execute_query_with_odbc(sparql_query)
+                print("DENOTATION: ", denotation)
+                import pdb; pdb.set_trace()
                 denotation = [res.replace("http://rdf.freebase.com/ns/",'') for res in denotation]
                 if len(denotation) == 0 :
                     
@@ -259,9 +264,11 @@ def execute_normed_s_expr_from_label_maps(normed_expr,
                     sparql_query = '\n'.join(clauses)
                     denotation = execute_query_with_odbc(sparql_query)
                     denotation = [res.replace("http://rdf.freebase.com/ns/",'') for res in denotation]                    
-        except:
+        except Exception as e:
+            print("ERROR: ", e)
             denotation = []
-        if len(denotation) != 0 :
+        if len(denotation) != 0:
+            import pdb; pdb.set_trace()
             break  
     if len(denotation) == 0 :
         query_expr = query_exprs[0]
@@ -443,6 +450,8 @@ def aggressive_top_k_eval_new(split, predict_file, dataset):
                                                 train_type_map,
                                                 surface_index)
 
+            print("ANSWERS LEN PRE: ", len(answers))
+            import pdb; pdb.set_trace()
             answers = [date_post_process(ans) for ans in list(answers)]
             
             denormed_pred.append(lf)
@@ -549,8 +558,8 @@ def aggressive_top_k_eval_new(split, predict_file, dataset):
     print('Gen Executable', gen_executable_cnt/ len(predictions))
     print('Final Executable', final_executable_cnt/ len(predictions))
 
-    result_file = os.path.join(dirname,f'{filename}_gen_sexpr_results.json')
-    official_results_file = os.path.join(dirname,f'{filename}_gen_sexpr_results_official_format.json')
+    result_file = os.path.join(dirname, f'{filename}_gen_sexpr_results.json')
+    official_results_file = os.path.join(dirname, f'{filename}_gen_sexpr_results_official_format.json')
     dump_json(lines, result_file, indent=4)
     dump_json(official_lines, official_results_file, indent=4)
 

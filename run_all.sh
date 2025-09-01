@@ -11,7 +11,7 @@
 #CUDA_VISIBLE_DEVICES=0 bash run_ft.sh WebQSP LLaMA-2-7b-hf webqsp_100_7_32_16 train 100 7 0 32 16 15
 #sleep 1m
 #CUDA_VISIBLE_DEVICES=0 bash run_ft.sh WebQSP LLaMA-2-7b-hf webqsp_100_7_32_16 test 100 7 0 32 16 15
-CUDA_VISIBLE_DEVICES=0 python3 -u eval_final.py --dataset WebQSP --pred_file LLM_checkpoint/LLaMA-2-7b-hf/evaluation_beam/beam_test_top_k_predictions.json
+#CUDA_VISIBLE_DEVICES=0 python3 -u eval_final.py --dataset WebQSP --pred_file LLM_checkpoint/LLaMA-2-7b-hf/evaluation_beam/beam_test_top_k_predictions.json
 CUDA_VISIBLE_DEVICES=0 python3 -u eval_final.py --dataset WebQSP --pred_file LLM_checkpoint/LLaMA-2-7b-hf/evaluation_beam/beam_test_top_k_predictions.json --golden_ent
 
 

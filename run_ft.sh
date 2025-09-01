@@ -62,6 +62,5 @@ if [[ $mode == *"test"* ]]; then
             --topk ${topk} \
             --soft_prompt_length ${soft_prompt_length} \
             --extra_infor_len ${extra_infor_len} \
-            --gate_len ${gate_len} \
-            --val_size 1000 \
+            --gate_len ${gate_len}
 fi
