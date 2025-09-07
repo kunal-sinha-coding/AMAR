@@ -114,17 +114,19 @@ def start(dbPath, port):
   if is_zip:
     print(f"Streaming RDF data from ZIP: {dbPath}")
     with zipfile.ZipFile(dbPath, 'r') as z:
-      for file_name in z.namelist():
-        print(f"Loading {file_name} into Virtuoso...")
-        with z.open(file_name) as f:
-          proc = subprocess.Popen(
-              [f"{virtuosoPath}/bin/isql", f"localhost:{isqlPort(port)}", "dba", "dba"],
-              stdin=subprocess.PIPE
-          )
-          for line in f:
-            proc.stdin.write(line)
-          proc.stdin.close()
-          proc.wait()
+        for file_name in z.namelist():
+            if file_name.endswith("/"): # Skip directories
+                continue
+            print(f"Loading {file_name} into Virtuoso...")
+            with z.open(file_name) as f:
+                proc = subprocess.Popen( # Open process connecting input and output
+                    [f"{virtuosoPath}/bin/isql", f"localhost:{isqlPort(port)}", "dba", "dba"],
+                    stdin=subprocess.PIPE
+                )
+                for line in f: # Stream contents into output
+                    proc.stdin.write(line)
+                proc.stdin.close()
+                proc.wait()
     print("Finished loading ZIP contents.")
 
 def stop(port):
